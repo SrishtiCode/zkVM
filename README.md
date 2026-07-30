@@ -1,8 +1,19 @@
 # zkvm
+
 **The easiest zkVM to understand.**
 
-This is a STARK-based zkVM built from scratch, with every stage of the proving
-pipeline made visible and interactive:
+An educational STARK proving framework with an interactive zkVM reference implementation.
+
+Every stage of the proving pipeline—from CPU execution to proof verification—is implemented from scratch, documented, and visualized.
+
+This project is intended to answer one question:
+
+> "How does a zkVM actually work internally?"
+
+Unlike production zkVMs, this project intentionally avoids hiding the
+cryptographic pipeline behind black-box abstractions.
+
+Every algorithm is implemented from scratch and exposed for inspection.
 
 - **CPU simulator** — step through a toy program instruction by instruction
 - **Execution trace viewer** — the table of register/memory state per cycle
@@ -15,6 +26,45 @@ There are production zkVMs with far more features (RISC Zero, SP1, Cairo VM).
 This project optimizes for a different thing: opening the hood so the whole
 mechanism is legible, end to end, in one sitting.
 
+## Architecture diagram
+
+```
+                 Program
+                     │
+                     ▼
+              CPU Simulator
+                     │
+                     ▼
+             Execution Trace
+                     │
+                     ▼
+          AIR Constraints
+                     │
+                     ▼
+      Trace Polynomial Interpolation
+                     │
+                     ▼
+       Low Degree Extension
+                     │
+                     ▼
+      Composition Polynomial
+                     │
+                     ▼
+          Merkle Commitments
+                     │
+                     ▼
+                  FRI
+                     │
+                     ▼
+            Fiat–Shamir
+                     │
+                     ▼
+             STARK Proof
+                     │
+                     ▼
+                Verifier
+```
+
 ## Why STARKs
 
 STARKs need no trusted setup — the whole system is built from two primitives:
@@ -22,7 +72,7 @@ STARKs need no trusted setup — the whole system is built from two primitives:
 makes them unusually teachable compared to SNARK constructions that route
 through pairing-based cryptography.
 
-## Pipeline
+## Proving Pipeline
 
 ```
 program
@@ -42,9 +92,49 @@ Every stage writes a JSON artifact (`trace.json`, `air.json`, `lde.json`,
 This keeps "the math" and "the visualization" cleanly decoupled — you can
 read or test any stage in isolation.
 
-## Status
+## Features
 
-🚧 Early scaffolding. Building in order:
+### Mathematical Foundations
+
+- Finite field arithmetic
+- FFT / IFFT
+- Polynomial interpolation
+- Low-degree extensions
+
+### STARK Protocol
+
+- AIR generation
+- Composition polynomials
+- Merkle commitments
+- Fiat–Shamir transcript
+- FRI prover and verifier
+- STARK proof generation
+
+### zkVM
+
+- Minimal instruction set
+- CPU simulator
+- Execution trace generation
+
+### Interactive Learning
+
+- CPU simulator
+- Execution trace viewer
+- AIR visualizer
+- Polynomial viewer
+- FRI visualizer
+- Proof explorer
+
+## Goals
+
+- Explain how STARK-based zkVMs work internally.
+- Build a reusable STARK proving framework.
+- Make zero-knowledge proofs easier to understand.
+- Provide interactive educational tooling.
+
+## Roadmap
+
+Early scaffolding. Building in order:
 
 - [ ] Phase 0 — field arithmetic + polynomial ops (`crates/field`, `crates/poly`)
 - [ ] Phase 1 — toy STARK for a trivial statement (no CPU yet), validating the
@@ -92,7 +182,7 @@ cd web && npm install && npm run dev
   tiny domain (8–16 elements) is used by default so every number in the
   polynomial/FRI viewers is human-graspable. A "real mode" toggle switches to
   the production-size field to show the same code scales.
-- **Toy ISA, not RISC-V.** A handful of opcodes (add, mul, jump, load, store,
+- **Minimal Instruction Set, not RISC-V.** A handful of opcodes (add, mul, jump, load, store,
   halt) — enough to be interesting, not so much that AIR constraints for
   memory consistency and byte range-checks drown out the core ideas.
 - **JSON artifacts as the seam.** The Rust core and the web frontend never
@@ -113,4 +203,4 @@ This project stands on the shoulders of excellent existing work:
 
 ## License
 
-MIT
+This project is licensed under the MIT License. See the `LICENSE` file for details.

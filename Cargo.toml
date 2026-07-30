@@ -1,5 +1,6 @@
 [workspace]
 resolver = "2"
+
 members = [
     "crates/field",
     "crates/poly",
@@ -14,33 +15,59 @@ members = [
     "bin/zkvm-cli",
 ]
 
-# The wasm crate is excluded from the default workspace build (it targets
-# wasm32-unknown-unknown and pulls in a different toolchain / feature set).
-# Build it explicitly with: cargo build -p zkvm-wasm --target wasm32-unknown-unknown
+# The WASM crate targets `wasm32-unknown-unknown` and is built separately.
+# Build it explicitly with:
+#
+# cargo build -p zkvm-wasm --target wasm32-unknown-unknown
+#
 exclude = ["wasm"]
 
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-authors = ["your-name-here"]
-license = "MIT"
-repository = "https://github.com/your-name-here/zkvm-visual"
-description = "An educational, fully visualized zkVM built from scratch (STARK-based)"
+rust-version = "1.89"
 
-# Shared dependency versions so every crate in the workspace stays in sync.
+authors = ["Srishti Rathi"]
+
+license = "MIT"
+repository = "https://github.com/SrishtiCode/zkvm"
+
+description = "An educational STARK-based zkVM built from scratch with interactive visualizations."
+
+keywords = [
+    "zkvm",
+    "stark",
+    "zero-knowledge",
+    "cryptography",
+    "rust",
+]
+
+categories = [
+    "cryptography",
+    "algorithms",
+]
+
 [workspace.dependencies]
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 sha2 = "0.10"
 rand = "0.8"
-thiserror = "1"
+thiserror = "2"
 clap = { version = "4", features = ["derive"] }
 
-# Keep debug builds usable for the FRI/poly crates, which do real arithmetic
-# and are painfully slow without at least some optimization.
-[profile.dev.package."*"]
+# Optimize debug builds slightly so finite-field arithmetic,
+# polynomial operations, and FRI remain reasonably fast during development.
+[profile.dev]
 opt-level = 1
 
 [profile.release]
 lto = true
 codegen-units = 1
+strip = true
+panic = "abort"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+
+[workspace.lints.clippy]
+all = "warn"
