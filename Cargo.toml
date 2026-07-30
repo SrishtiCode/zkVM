@@ -1,0 +1,46 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/field",
+    "crates/poly",
+    "crates/merkle",
+    "crates/isa",
+    "crates/air",
+    "crates/fri",
+    "crates/transcript",
+    "crates/prover",
+    "crates/verifier",
+    "crates/viz-export",
+    "bin/zkvm-cli",
+]
+
+# The wasm crate is excluded from the default workspace build (it targets
+# wasm32-unknown-unknown and pulls in a different toolchain / feature set).
+# Build it explicitly with: cargo build -p zkvm-wasm --target wasm32-unknown-unknown
+exclude = ["wasm"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+authors = ["your-name-here"]
+license = "MIT"
+repository = "https://github.com/your-name-here/zkvm-visual"
+description = "An educational, fully visualized zkVM built from scratch (STARK-based)"
+
+# Shared dependency versions so every crate in the workspace stays in sync.
+[workspace.dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+sha2 = "0.10"
+rand = "0.8"
+thiserror = "1"
+clap = { version = "4", features = ["derive"] }
+
+# Keep debug builds usable for the FRI/poly crates, which do real arithmetic
+# and are painfully slow without at least some optimization.
+[profile.dev.package."*"]
+opt-level = 1
+
+[profile.release]
+lto = true
+codegen-units = 1
