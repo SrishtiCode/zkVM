@@ -136,7 +136,7 @@ read or test any stage in isolation.
 
 Early scaffolding. Building in order:
 
-- [ ] Phase 0 — field arithmetic + polynomial ops (`crates/field`, `crates/poly`)
+- [✔] Phase 0 — field arithmetic + polynomial ops (`crates/field`, `crates/poly`)
 - [ ] Phase 1 — toy STARK for a trivial statement (no CPU yet), validating the
       full pipeline: interpolate → LDE → constraints → FRI → verify
 - [ ] Phase 2 — minimal ISA + CPU simulator (`crates/isa`)
@@ -163,6 +163,86 @@ wasm/           compiles the real prover to WASM for live in-browser proving
 tests/          integration + conformance tests
 ```
 
+```
+.
+|-- Cargo.toml
+|-- LICENSE
+|-- README.md
+|-- bin
+|   `-- zkvm-cli
+|       `-- src
+|           `-- main.rs
+|-- crates
+|   |-- air
+|   |   `-- src
+|   |       |-- air_for_isa.rs
+|   |       |-- constraints.rs
+|   |       `-- lib.rs
+|   |-- field
+|   |   `-- src
+|   |       |-- goldilocks.rs
+|   |       |-- lib.rs
+|   |       `-- field.rs
+|   |-- fri
+|   |   `-- src
+|   |       |-- fold.rs
+|   |       |-- layers.rs
+|   |       `-- lib.rs
+|   |-- isa
+|   |   `-- src
+|   |       |-- cpu.rs
+|   |       |-- lib.rs
+|   |       |-- opcodes.rs
+|   |       `-- trace.rs
+|   |-- merkle
+|   |-- poly
+|   |   `-- src
+|   |       |-- fft.rs
+|   |       |-- interpolate.rs
+|   |       |-- lde.rs
+|   |       `-- lib.rs
+|   |-- prover
+|   |   `-- src
+|   |       |-- lib.rs
+|   |       `-- proof.rs
+|   |-- src
+|   |-- transcript
+|   |   `-- src
+|   |       `-- lib.rs
+|   |-- verifier
+|   |   `-- src
+|   |       `-- lib.rs
+|   `-- viz-export
+|       `-- src
+|           |-- air_json.rs
+|           |-- fri_json.rs
+|           |-- lib.rs
+|           |-- poly_json.rs
+|           |-- proof_json.rs
+|           `-- trace_json.rs
+|-- docs
+|-- examples
+|-- frontend
+|   `-- src
+|       |-- lib.rs
+|       `-- trace.json.rs
+|-- test
+|   |-- conformance
+|   `-- integration
+|-- wasm
+|   `-- src
+|       `-- lib.rs
+`-- web
+    |-- package.json
+    `-- src
+        |-- App.tsx
+        |-- data
+        |   `-- artifacts.ts
+        `-- viewers
+
+38 directories, 37 files
+```
+
 ## Running it
 
 ```bash
@@ -177,7 +257,7 @@ cd web && npm install && npm run dev
 
 ## Design choices worth knowing about
 
-- **Toy field mode.** Real STARK fields (e.g. Goldilocks, `2^64 - 2^32 + 1`)
+- **Field mode.** Real STARK fields (e.g. Goldilocks, `2^64 - 2^32 + 1`)
   are too large to display meaningfully. A small prime field (mod 97) with a
   tiny domain (8–16 elements) is used by default so every number in the
   polynomial/FRI viewers is human-graspable. A "real mode" toggle switches to

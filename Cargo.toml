@@ -4,22 +4,12 @@ resolver = "2"
 members = [
     "crates/field",
     "crates/poly",
-    "crates/merkle",
-    "crates/isa",
-    "crates/air",
-    "crates/fri",
-    "crates/transcript",
-    "crates/prover",
-    "crates/verifier",
-    "crates/viz-export",
-    "bin/zkvm-cli",
 ]
 
 # The WASM crate targets `wasm32-unknown-unknown` and is built separately.
-# Build it explicitly with:
 #
+# Build with:
 # cargo build -p zkvm-wasm --target wasm32-unknown-unknown
-#
 exclude = ["wasm"]
 
 [workspace.package]
@@ -55,8 +45,6 @@ rand = "0.8"
 thiserror = "2"
 clap = { version = "4", features = ["derive"] }
 
-# Optimize debug builds slightly so finite-field arithmetic,
-# polynomial operations, and FRI remain reasonably fast during development.
 [profile.dev]
 opt-level = 1
 

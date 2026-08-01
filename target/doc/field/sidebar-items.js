@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"mod":["goldilocks","toyfield"],"trait":["Field"]};
