@@ -1,6 +1,5 @@
 // Goldilocks - the finite field GF(2^64-2^32+1)
-// p = 2^64 - 2^32 + 1 is chosen because :
-// - it fits in a u64 so field elements are a single machine word,
+// p = 2^64 - 2^32 + 1 is chosen because : it fits in a u64 so field elements are a single machine word,
 // p - 1 = 2^32 * 3 * 5 * 17 * 257 * 65537 ,  giving a 2-adicity of 32 FFTs up to size 2^32 are supported.
 
 use crate::Field;
