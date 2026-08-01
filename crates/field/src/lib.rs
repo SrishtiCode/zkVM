@@ -64,7 +64,7 @@ pub trait Field:
     fn is_zero(&self) -> bool {//Is this field element equal to the zero element?
         *self == Self::zero()
     }
-    fn from_u64(x: 64) -> Self;
+    fn from_u64(x: u64) -> Self;
     fn modulus() -> u64;
     fn inverse(&self) -> Option<Self>;
     fn pow(&self, exp: u64) -> Self{
@@ -92,7 +92,7 @@ pub trait Field:
             Self::TWO_ADICITY
         );
         let mut root = Self::primitive_root_of_unity();
-        for _in 0..(Self::TWO_ADICITY - log_n){
+        for _ in 0..(Self::TWO_ADICITY - log_n){
             root *= root;
         } 
         root
@@ -103,24 +103,24 @@ pub trait Field:
 pub(crate) mod field_laws {
     use super::Field;
 
-    pub fn check_additive_identity<F: Field>() {
+    pub fn check_additive_identity<F: Field>() {//a + 0 = a  
         let a = F::from_u64(1234567);
         assert_eq!(a + F::zero(), a);
         assert_eq!(F::zero() + a, a);
     }
 
-    pub fn check_multiplicative_identity<F: Field>() {
+    pub fn check_multiplicative_identity<F: Field>() {// a*1=a     
         let a = F::from_u64(7654321);
         assert_eq!(a * F::one(), a);
         assert_eq!(F::one() * a, a);
     }
 
-    pub fn check_additive_inverse<F: Field>() {
+    pub fn check_additive_inverse<F: Field>() {//a+(-a)=0
         let a = F::from_u64(42);
         assert_eq!(a + (-a), F::zero());
     }
 
-    pub fn check_multiplicative_inverse<F: Field>() {
+    pub fn check_multiplicative_inverse<F: Field>() {//a*a^-1
         for x in [1u64, 2, 3, 5, 97, 12345] {
             let a = F::from_u64(x);
             if a.is_zero() {
@@ -132,14 +132,14 @@ pub(crate) mod field_laws {
         assert!(F::zero().inverse().is_none());
     }
 
-    pub fn check_distributivity<F: Field>() {
+    pub fn check_distributivity<F: Field>() {//a(b+c)=ab+ac
         let a = F::from_u64(3);
         let b = F::from_u64(11);
         let c = F::from_u64(19);
         assert_eq!(a * (b + c), a * b + a * c);
     }
 
-    pub fn check_root_of_unity<F: Field>() {
+    pub fn check_root_of_unity<F: Field>() {//n=2^logn
         let log_n = 3u32.min(F::TWO_ADICITY);
         let n = 1u64 << log_n;
         let root = F::root_of_unity(log_n);
