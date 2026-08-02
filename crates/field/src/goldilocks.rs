@@ -1,5 +1,6 @@
 // Goldilocks - the finite field GF(2^64-2^32+1)
-// p = 2^64 - 2^32 + 1 is chosen because : it fits in a u64 so field elements are a single machine word,
+// p = 2^64 - 2^32 + 1 is chosen because :
+// - it fits in a u64 so field elements are a single machine word,
 // p - 1 = 2^32 * 3 * 5 * 17 * 257 * 65537 ,  giving a 2-adicity of 32 FFTs up to size 2^32 are supported.
 
 use crate::Field;
@@ -122,8 +123,12 @@ impl Field for Goldilocks {
         MODULUS
     }
 
+    fn to_canonical_u64(&self) -> u64 {
+        self.0
+    }
+
     fn inverse(&self) -> Option<Self>{
-        if self.0 == {
+        if self.0 == 0{
             None
         } else {
             Some(self.pow(MODULUS - 2))
