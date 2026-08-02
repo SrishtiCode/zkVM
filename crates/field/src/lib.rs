@@ -65,6 +65,7 @@ pub trait Field:
         *self == Self::zero()
     }
     fn from_u64(x: u64) -> Self;
+    fn to_canonical_u64(&self) -> u64;
     fn modulus() -> u64;
     fn inverse(&self) -> Option<Self>;
     fn pow(&self, exp: u64) -> Self{
