@@ -10,44 +10,49 @@ use std::ops::{Add, AddAssign, Mul, MulAssign, Neg, Sub, SubAssign};
 // The modulus of the toy field
 pub const MODULUS: u64 = 97;
 //GENERATOR^((p-1)/32) mod p = 5^3 mod 97 = 28
-const ROOT_OF_UNITY_32: U64 = 28;
+const ROOT_OF_UNITY_32: u64 = 28;
 
 #[derive(Copy, Clone, PartialEq, Eq, Default, Hash)]
 pub struct ToyField(u64);
 
-impl ToyField{
-    pub fn new(value: u64) -> Self{
+impl ToyField {
+    /// Constructs an element from any `u64`, reducing mod 97.
+    pub fn new(value: u64) -> Self {
         ToyField(value % MODULUS)
-    }   
+    }
 
-    pub fn value(&self) -> u64{
+    /// The raw representative in `0..97`.
+    pub fn value(&self) -> u64 {
         self.0
-    }    
-} 
-
-impl fmt::Debug for ToyField{
-    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result{
-        write!(f, "{}", self.0)
-    }  
+    }
 }
 
-impl fmt::Display for ToyField{
-    fn fmt(&self, f: &mut::Formatter<'_ )
-} 
+impl fmt::Debug for ToyField {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
 
-impl Add for ToyField{
+impl fmt::Display for ToyField {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.0)
+    }
+}
+
+impl Add for ToyField {
     type Output = Self;
-    fn add(self, rhs: Self) -> Self{
+    fn add(self, rhs: Self) -> Self {
         ToyField((self.0 + rhs.0) % MODULUS)
     }
-}    
+}
 
-impl Sub for ToyField{
+impl Sub for ToyField {
     type Output = Self;
-    fn sub(self, rhs:Self) -> Self{
-        ToyField((self.0 * rhs.0) % MODULUS)
-    }     
-}   
+    fn sub(self, rhs: Self) -> Self {
+        // add MODULUS before subtracting to stay in unsigned arithmetic
+        ToyField((self.0 + MODULUS - rhs.0) % MODULUS)
+    }
+}
 
 impl Mul for ToyField {
     type Output = Self;
@@ -83,10 +88,27 @@ impl MulAssign for ToyField {
     fn mul_assign(&mut self, rhs: Self) {
         *self = *self * rhs;
     }
+}
 
+impl Field for ToyField {
+    fn zero() -> Self {
+        ToyField(0)
+    }
+
+    fn one() -> Self {
+        ToyField(1)
+    }
+
+    fn from_u64(x: u64) -> Self {
+        ToyField::new(x)
+    }
 
     fn modulus() -> u64 {
         MODULUS
+    }
+
+    fn to_canonical_u64(&self) -> u64 {
+        self.0
     }
 
     fn inverse(&self) -> Option<Self> {
@@ -110,6 +132,7 @@ impl MulAssign for ToyField {
         ToyField(ROOT_OF_UNITY_32)
     }
 }
+
 
 #[cfg(test)]
 mod tests {
