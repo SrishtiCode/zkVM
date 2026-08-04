@@ -1,1 +1,0 @@
-window.SIDEBAR_ITEMS = {"fn":["fft_interpolate","lagrange_interpolate"]};
