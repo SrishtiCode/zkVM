@@ -83,7 +83,7 @@ fn evaluate_composition_at_point<F: Field>(
             .expect("vanishing_h/(x-last) is nonzero off of H, and the LDE coset avoids H entirely");
             
     let start_num = a_here - public.start;
-    let start_quotient = start_num * (x - F::one()),inverse().expect("x != 1 on the LDE coset");        
+    let start_quotient = start_num * (x - F::one()).inverse().expect("x != 1 on the LDE coset");        
 
     let end_num = a_here - end_value;
     let end_quotient = end_num * (x - last_trace_point).inverse().expect("x != ω^(n-1) on the LDE coset");
