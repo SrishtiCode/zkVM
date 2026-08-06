@@ -136,8 +136,8 @@ read or test any stage in isolation.
 
 Early scaffolding. Building in order:
 
-- [✔] Phase 0 — field arithmetic + polynomial ops (`crates/field`, `crates/poly`)
-- [✔] Phase 1 — toy STARK for a trivial statement (no CPU yet), validating the
+[✔] Phase 0 — field arithmetic + polynomial ops (`crates/field`, `crates/poly`)
+[✔] Phase 1 — toy STARK for a trivial statement (no CPU yet), validating the
       full pipeline: interpolate → LDE → constraints → FRI → verify
 - [ ] Phase 2 — minimal ISA + CPU simulator (`crates/isa`)
 - [ ] Phase 3 — AIR for that ISA (`crates/air`)
