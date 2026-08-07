@@ -140,7 +140,7 @@ Early scaffolding. Building in order:
 
 [✔] Phase 1 — toy STARK for a trivial statement (no CPU yet), validating the
       full pipeline: interpolate → LDE → constraints → FRI → verify
-- [ ] Phase 2 — minimal ISA + CPU simulator (`crates/isa`)
+[✔] Phase 2 — minimal ISA + CPU simulator (`crates/isa`)
 - [ ] Phase 3 — AIR for that ISA (`crates/air`)
 - [ ] Phase 4 — Merkle commitments (`crates/merkle`)
 - [ ] Phase 5 — FRI protocol (`crates/fri`)
