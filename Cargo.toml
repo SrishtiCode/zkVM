@@ -4,6 +4,7 @@ resolver = "2"
 members = [
     "crates/field",
     "crates/poly",
+    "crates/isa",
 ]
 
 # The WASM crate targets `wasm32-unknown-unknown` and is built separately.
