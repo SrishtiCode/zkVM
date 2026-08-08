@@ -1,0 +1,9 @@
+[package]
+name = "merkle"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+description = "Phase 4: Merkle commitments over a field-native (Poseidon-style algebraic) hash, replacing toystark's toy non-cryptographic version."
+
+[dependencies]
+field = { path = "../field" }
