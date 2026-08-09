@@ -145,7 +145,8 @@ Early scaffolding. Building in order:
 
 [✔] Phase 3 — AIR for that ISA (`crates/air`)
 
-- [ ] Phase 4 — Merkle commitments (`crates/merkle`)
+[✔] Phase 4 — Merkle commitments (`crates/merkle`)
+
 - [ ] Phase 5 — FRI protocol (`crates/fri`)
 - [ ] Phase 6 — Fiat–Shamir transcript, non-interactive proofs (`crates/transcript`)
 - [ ] Phase 7 — prover + verifier assembly (`crates/prover`, `crates/verifier`)
