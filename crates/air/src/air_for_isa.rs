@@ -28,7 +28,7 @@ pub const NUM_COLUMNS: usize = 1
     + 1
     + 1
     + 1
-    + 1
+    + 1;
 
 impl<F: Field> Row<F>{
     pub fn to_columns(&self) -> Vec<F>{

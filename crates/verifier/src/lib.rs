@@ -290,7 +290,7 @@ mod tests {
         ]
     }
 
-    [test]
+    #[test]
     fn fibonacci_ten_proves_and_verifies_end_to_end() {
         let hasher: Poseidon<Goldilocks> = Poseidon::new(7);
         let program = fibonacci_program(10);

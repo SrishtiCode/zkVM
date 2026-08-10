@@ -21,7 +21,7 @@ pub struct Transcript<'h, F: Field>{
 impl<'h, F:Field> Transcript<'h, F>{
     pub fn new(hasher: &'h Poseidon<F>, label: &str) -> Self{
         let mut t = Transcript { hasher, state: [F::zero(); T], absorb_pos: 0, squeeze_pos: RATE};
-        t.absorb(F::from_u64(fnvla(label.as_bytes())));
+        t.absorb(F::from_u64(fnv1a(label.as_bytes())));
         t
     }
 

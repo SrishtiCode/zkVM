@@ -1,5 +1,5 @@
 use crate::hash::{hash_leaf, MerklePath, MerkleTree};
-use crate::transcript::Transcript
+use crate::transcript::Transcript;
 use field::Field;
 use poly::interpolate::lagrange_interpolate;
 use poly::lde::coset_domain;
@@ -13,7 +13,12 @@ pub struct FriRoundOpening<F: Field>{
     pub path_b: MerklePath,       
 } 
 
-#[derive(Debug,Clone)]
+#[derive(Debug, Clone)]
+pub struct FriCommitPhaseProof<F: Field> {
+    pub layer_roots: Vec<u64>,
+    pub final_poly_coeffs: Vec<F>,
+}
+
 pub struct FriProver<F: Field>{
     eval_layers: Vec<Vec<F>>,
     trees: Vec<MerkleTree>,

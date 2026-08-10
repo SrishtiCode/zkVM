@@ -14,7 +14,7 @@ fn gcd(a: u64, b: u64) -> u64{
     }
 }
 
-fn splitmix64_next(State: &mut u64) -> u64{
+fn splitmix64_next(state: &mut u64) -> u64{
     *state = state.wrapping_add(0x9E3779B97F4A7C15);
     let mut z = *state;
     z = (z ^ (z >> 30)).wrapping_mul(0xBF58476D1CE4E5B9); 
@@ -23,7 +23,7 @@ fn splitmix64_next(State: &mut u64) -> u64{
 }
 
 pub struct Poseidon<F: Field>{
-    alpha: u64;
+    alpha: u64,
     round_constants: Vec<[F; T]>,
     mds: [[F; T]; T],
 }

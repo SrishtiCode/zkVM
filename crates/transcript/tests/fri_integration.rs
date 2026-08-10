@@ -20,7 +20,7 @@ fn prove_and_verify(
     let offset = tf(3);
     let evals = low_degree_extend(&coeffs, blowup, offset);
 
-    let mut prover_transcript = Transcript::new(&hasher, "fri-integratio-test-v1");
+    let mut prover_transcript = Transcript::new(&hasher, "fri-integration-test-v1");
     prover_transcript.absorb_u64(domain_size as u64);
     let prover = FriProver::commit(
         &hasher,
@@ -37,12 +37,11 @@ fn prove_and_verify(
     
     let mut verifier_transcript = Transcript::new(&hasher, "fri-integration-test-v1");
     verifier_transcript.absorb_u64(domain_size as u64);
-    let betas = replay_commit_phase(&proof, &mut verifier_transript);
-    let verifier_indices: Vec<usize> = (0..num_queries).map(|_| verifier_transcipt.squeeze_index(domain_size/2)).collect();       
+    let betas = replay_commit_phase(&proof, &mut verifier_transcript);
+    let verifier_indices: Vec<usize> = (0..num_queries).map(|_| verifier_transcript.squeeze_index(domain_size/2)).collect();       
 
     assert_eq!(
-        query_indices, verifier_indices,"the whole point of Fiat-Shamir: two independently-run transcripts over the same \ 
-        data must derive identical challenges without any direct communication"
+        query_indices, verifier_indices,"the whole point of Fiat-Shamir: two independently-run transcripts over the same data must derive identical challenges without any direct communication"
     );
 
     verify_queries(

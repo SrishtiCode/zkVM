@@ -1,62 +1,27 @@
 [workspace]
 resolver = "2"
-
 members = [
     "crates/field",
     "crates/poly",
+    "crates/toystark",
     "crates/isa",
+    "crates/air",
+    "crates/merkle",
+    "crates/fri",
+    "crates/transcript",
+    "crates/prover",
+    "crates/verifier",
+    "crates/viz-export",
 ]
-
-# The WASM crate targets `wasm32-unknown-unknown` and is built separately.
-#
-# Build with:
-# cargo build -p zkvm-wasm --target wasm32-unknown-unknown
-exclude = ["wasm"]
 
 [workspace.package]
 version = "0.1.0"
 edition = "2021"
-rust-version = "1.89"
-
+license = "MIT"
+rust-version = "1.95"
 authors = ["Srishti Rathi"]
 
-license = "MIT"
-repository = "https://github.com/SrishtiCode/zkvm"
-
-description = "An educational STARK-based zkVM built from scratch with interactive visualizations."
-
-keywords = [
-    "zkvm",
-    "stark",
-    "zero-knowledge",
-    "cryptography",
-    "rust",
-]
-
-categories = [
-    "cryptography",
-    "algorithms",
-]
-
-[workspace.dependencies]
-serde = { version = "1", features = ["derive"] }
-serde_json = "1"
-sha2 = "0.10"
-rand = "0.8"
-thiserror = "2"
-clap = { version = "4", features = ["derive"] }
+[workspace.lints.rust]
 
 [profile.dev]
 opt-level = 1
-
-[profile.release]
-lto = true
-codegen-units = 1
-strip = true
-panic = "abort"
-
-[workspace.lints.rust]
-unsafe_code = "forbid"
-
-[workspace.lints.clippy]
-all = "warn"

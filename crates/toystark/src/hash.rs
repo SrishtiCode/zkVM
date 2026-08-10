@@ -4,13 +4,14 @@ fn mix64(mut x: u64) -> u64{
     x ^= x >> 27;
     x = x.wrapping_mul(0x94d049bb133111eb);
     x ^= x >> 31;
+    x
 } 
 
 pub fn hash_leaf(value: u64) -> u64{
     mix64(value ^ 0x9E37_79B9_7F4A_7C15)
 }
 
-pub fn hash_pair(left: u64, right;u64) -> u64{
+pub fn hash_pair(left: u64, right: u64) -> u64{
     mix64(left.rotate_left(17) ^ mix64(right))
 }
 
@@ -47,7 +48,8 @@ impl MerkleTree{
     pub fn build(leaf_hashes : &[u64]) -> Self{
         assert!(
             leaf_hashes.len().is_power_of_two() && !leaf_hashes.is_empty(),
-            "Not correct number of hashes"
+            "Merkle tree needs a nonzero power-of-two number of leaves, got {}",
+            leaf_hashes.len()
         );
         let mut layers = vec![leaf_hashes.to_vec()];
         while layers.last().unwrap().len() > 1{
@@ -58,7 +60,7 @@ impl MerkleTree{
         MerkleTree{layers}
     }
 
-    pub fn from_values(values:&[u64]){
+    pub fn from_values(values:&[u64]) -> Self {
         let leaves: Vec<u64> = values.iter().map(|&v| hash_leaf(v)).collect();
         Self::build(&leaves)  
     }    
@@ -75,7 +77,7 @@ impl MerkleTree{
         assert!(index < self.num_leaves(), "leaf index {index} out of range");
         let mut siblings = Vec::with_capacity(self.layers.len() - 1);
         let mut idx = index;
-        for layer in &self.layers[..self.layers.len() - 1];{
+        for layer in &self.layers[..self.layers.len() - 1]{
             siblings.push(layer[idx ^ 1]);
             idx /= 2;
         }   

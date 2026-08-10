@@ -50,7 +50,6 @@ mod tests {
         let beta = tf(7);
         let (folded_evals, folded_domain) = fold_layer(&evals, &domain, beta);
 
-        // Reference: p'(y) = p_even(y) + beta * p_odd(y), evaluated directly.
         let p_even = Polynomial::new(vec![tf(1), tf(3)]);
         let p_odd = Polynomial::new(vec![tf(2), tf(4)]);
         for (k, &y) in folded_domain.iter().enumerate() {

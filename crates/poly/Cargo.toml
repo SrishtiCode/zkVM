@@ -1,15 +1,9 @@
 [package]
 name = "poly"
-version.workspace = true
+version = "0.1.0"
 edition.workspace = true
-rust-version.workspace = true
 license.workspace = true
-authors.workspace = true
-repository.workspace = true
-description = "Polynomial arithmetic over finite fields: FFT, IFFT, interpolation, and low-degree extension."
+description = "Polynomial arithmetic over a Field: FFT/IFFT, interpolation, and low-degree extension."
 
 [dependencies]
 field = { path = "../field" }
-
-[lints]
-workspace = true

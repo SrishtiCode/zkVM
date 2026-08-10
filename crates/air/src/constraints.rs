@@ -252,6 +252,7 @@ mod tests {
     fn tampered_read_index_one_hot_redirects_a_read_and_is_caught() {
         let trace = run_padded(&add_program(), vec![], 8);
         let mut rows = build_rows(&trace);
+        rows[2].is_read_a_r[1] = ToyField::one();
         assert!(check_trace(&rows).is_err());
     }
 

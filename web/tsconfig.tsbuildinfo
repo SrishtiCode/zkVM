@@ -1,0 +1,1 @@
+{"root":["./src/App.tsx","./src/main.tsx","./src/useArtifact.tsx","./src/vite-env.d.ts","./src/data/artifacts.ts","./src/viewers/AirViewer.tsx","./src/viewers/CpuSimulatorViewer.tsx","./src/viewers/FriViewer.tsx","./src/viewers/PolynomialViewer.tsx","./src/viewers/ProofViewer.tsx","./src/viewers/TraceViewer.tsx"],"version":"5.9.3"}
