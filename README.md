@@ -147,7 +147,8 @@ Early scaffolding. Building in order:
 
 [✔] Phase 4 — Merkle commitments (`crates/merkle`)
 
-- [ ] Phase 5 — FRI protocol (`crates/fri`)
+[✔] Phase 5 — FRI protocol (`crates/fri`)
+
 - [ ] Phase 6 — Fiat–Shamir transcript, non-interactive proofs (`crates/transcript`)
 - [ ] Phase 7 — prover + verifier assembly (`crates/prover`, `crates/verifier`)
 - [ ] Phase 8 — the six web visualizers (`web/`)
