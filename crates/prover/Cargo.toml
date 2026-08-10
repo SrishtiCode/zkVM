@@ -1,0 +1,15 @@
+[package]
+name = "prover"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+description = "Phase 7: prover assembly. Wires isa (trace) + air (constraints) + merkle (commitments) + fri (low-degree test) + transcript (Fiat-Shamir) into an actual end-to-end zkVM proof."
+
+[dependencies]
+field = { path = "../field" }
+poly = { path = "../poly" }
+isa = { path = "../isa" }
+air = { path = "../air" }
+merkle = { path = "../merkle" }
+fri = { path = "../fri" }
+transcript = { path = "../transcript" }
