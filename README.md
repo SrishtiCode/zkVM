@@ -149,8 +149,10 @@ Early scaffolding. Building in order:
 
 [✔] Phase 5 — FRI protocol (`crates/fri`)
 
-- [ ] Phase 6 — Fiat–Shamir transcript, non-interactive proofs (`crates/transcript`)
-- [ ] Phase 7 — prover + verifier assembly (`crates/prover`, `crates/verifier`)
+[✔] Phase 6 — Fiat–Shamir transcript, non-interactive proofs (`crates/transcript`)
+
+[✔] Phase 7 — prover + verifier assembly (`crates/prover`, `crates/verifier`)
+
 - [ ] Phase 8 — the six web visualizers (`web/`)
 - [ ] Phase 9 — WASM build so visualizers run a *live* prover in-browser
 
