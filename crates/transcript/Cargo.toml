@@ -1,0 +1,14 @@
+[package]
+name = "transcript"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+description = "Phase 6: a real Fiat-Shamir transcript (a proper duplex sponge over the Poseidon permutation, with domain separation) implementing fri::ChallengeSource, turning FRI's interactive shape into a genuine non-interactive proof."
+
+[dependencies]
+field = { path = "../field" }
+merkle = { path = "../merkle" }
+fri = { path = "../fri" }
+
+[dev-dependencies]
+poly = { path = "../poly" }
