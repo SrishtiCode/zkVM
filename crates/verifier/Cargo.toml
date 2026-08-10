@@ -1,0 +1,18 @@
+[package]
+name = "verifier"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+description = "Phase 7: verifier assembly. Checks a prover::Proof without re-executing the program or seeing the full trace."
+
+[dependencies]
+field = { path = "../field" }
+isa = { path = "../isa" }
+air = { path = "../air" }
+merkle = { path = "../merkle" }
+fri = { path = "../fri" }
+transcript = { path = "../transcript" }
+prover = { path = "../prover" }
+
+[dev-dependencies]
+poly = { path = "../poly" }
