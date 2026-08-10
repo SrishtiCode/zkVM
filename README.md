@@ -153,7 +153,8 @@ Early scaffolding. Building in order:
 
 [✔] Phase 7 — prover + verifier assembly (`crates/prover`, `crates/verifier`)
 
-- [ ] Phase 8 — the six web visualizers (`web/`)
+[✔] Phase 8 — the six web visualizers (`web/`)
+
 - [ ] Phase 9 — WASM build so visualizers run a *live* prover in-browser
 
 See `docs/` for a write-up per stage as each one lands.
