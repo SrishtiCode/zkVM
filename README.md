@@ -92,6 +92,66 @@ Every stage writes a JSON artifact (`trace.json`, `air.json`, `lde.json`,
 This keeps "the math" and "the visualization" cleanly decoupled — you can
 read or test any stage in isolation.
 
+## Interactive visualizers
+
+Six tabs walk the exact same run — `3^4 mod 97`, computed by repeated
+multiplication — through every stage of the pipeline, reading real JSON
+artifacts exported by `viz-export` (not mocked data). A seventh tab compiles
+the actual prover and verifier to WASM and proves live in the browser.
+
+### CPU simulator
+
+Step through the toy program instruction by instruction and watch registers
+update each cycle.
+
+![CPU simulator](assets/screenshots/cpu-simulator.png)
+
+### Execution trace
+
+Every cycle of the same run, all at once — the table `air::build_rows` turns
+into columns for interpolation.
+
+![Execution trace](assets/screenshots/execution-trace.png)
+
+### AIR visualizer
+
+The same run through the AIR's eyes: one-hot opcode/register selectors and
+every named transition constraint, evaluated row by row.
+
+![AIR visualizer](assets/screenshots/air-visualizer.png)
+
+### Polynomial viewer
+
+The trace interpolated to coefficients, then low-degree-extended onto a
+coset — the same `poly::interpolate` + `poly::lde` pipeline used by the
+prover itself.
+
+![Polynomial viewer](assets/screenshots/polynomial-viewer.png)
+
+### FRI visualizer
+
+Folding the composition polynomial in half each round until it's small
+enough to send outright, with a Merkle root committed before each round's
+`β` challenge is revealed.
+
+![FRI visualizer](assets/screenshots/fri-visualizer.png)
+
+### Proof explorer
+
+The full proof object — trace Merkle root, FRI layer roots, final
+polynomial, and randomly-sampled query openings, each a Merkle authentication
+path from an opened trace value up to the committed root.
+
+![Proof explorer](assets/screenshots/proof-explorer.png)
+
+### Live prover
+
+The real prover and verifier, compiled to WebAssembly, proving a genuine
+STARK — interpolation, low-degree extension, Merkle commitments, FRI
+folding, Fiat–Shamir — entirely in-browser, no server round trip.
+
+![Live prover](assets/screenshots/live-prover.png)
+
 ## Features
 
 ### Mathematical Foundations
@@ -124,6 +184,7 @@ read or test any stage in isolation.
 - Polynomial viewer
 - FRI visualizer
 - Proof explorer
+- Live in-browser prover (WASM)
 
 ## Goals
 
@@ -134,7 +195,7 @@ read or test any stage in isolation.
 
 ## Roadmap
 
-Early scaffolding. Building in order:
+Building in order:
 
 [✔] Phase 0 — field arithmetic + polynomial ops (`crates/field`, `crates/poly`)
 
@@ -155,7 +216,7 @@ Early scaffolding. Building in order:
 
 [✔] Phase 8 — the six web visualizers (`web/`)
 
-- [ ] Phase 9 — WASM build so visualizers run a *live* prover in-browser
+[✔] Phase 9 — WASM build so visualizers run a *live* prover in-browser
 
 See `docs/` for a write-up per stage as each one lands.
 
@@ -255,13 +316,19 @@ tests/          integration + conformance tests
 ## Running it
 
 ```bash
-# core pipeline (once phase 1+ lands)
+# core pipeline
 cargo run -p zkvm-cli -- run examples/fibonacci/program.zkasm
 cargo run -p zkvm-cli -- prove examples/fibonacci/program.zkasm
 cargo run -p zkvm-cli -- verify examples/fibonacci/proof.json
 
-# visualizers (once phase 8 lands)
+# regenerate the static JSON artifacts the visualizers read
+cargo run -p viz-export --bin export
+
+# visualizers (tabs 1-6 read the static artifacts above)
 cd web && npm install && npm run dev
+
+# Live prover tab: builds the real prover to WASM
+./scripts/build-wasm.sh
 ```
 
 ## Design choices worth knowing about
